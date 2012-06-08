@@ -715,7 +715,7 @@ Remember that -f can be used to specify fabfile path, and use -h for help.""")
                 *args, **kwargs
             )
         # If we got here, no errors occurred, so print a final note.
-        if state.output.status:
+        if state.output.status and not state.env.quiet:
             print("\nDone.")
     except SystemExit:
         # a number of internal functions might raise this one.

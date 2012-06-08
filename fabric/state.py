@@ -191,6 +191,12 @@ env_options = [
         help="SSH connection port"
     ),
 
+    make_option('-q', '--quiet',
+        action='store_true',
+        default=False,
+        help="terse output"
+    ),
+
     make_option('-r', '--reject-unknown-hosts',
         action='store_true',
         default=False,

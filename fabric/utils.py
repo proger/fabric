@@ -35,8 +35,8 @@ def warn(msg):
     provided that the ``warnings`` output level (which is active by default) is
     turned on.
     """
-    from fabric.state import output
-    if output.warnings:
+    from fabric.state import output, env
+    if output.warnings and not env.quiet:
         print >> sys.stderr, "\nWarning: %s\n" % msg
 
 

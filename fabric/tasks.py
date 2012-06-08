@@ -143,7 +143,7 @@ def _execute(task, host, my_env, args, kwargs, jobs, queue, multiprocessing):
     Primary single-host work body of execute()
     """
     # Log to stdout
-    if state.output.running and not hasattr(task, 'return_value'):
+    if state.output.running and not hasattr(task, 'return_value') and not state.env.quiet:
         print("[%s] Executing task '%s'" % (host, my_env['command']))
     # Create per-run env with connection settings
     local_env = to_dict(host)
