@@ -160,6 +160,7 @@ class JobQueue(object):
         for job in self._completed:
             results[job.name] = {
                 'exit_code': job.exitcode,
+                'results': job.exitcode,
             }
         while True:
             try:
