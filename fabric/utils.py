@@ -21,8 +21,7 @@ def abort(msg):
     """
     from fabric.state import output
     if output.aborts:
-        print >> sys.stderr, "\nFatal error: " + str(msg)
-        print >> sys.stderr, "\nAborting."
+        print >> sys.stderr, "Fatal: " + str(msg)
     sys.exit(1)
 
 
@@ -128,13 +127,18 @@ def fastprint(text, show_prefix=False, end="", flush=True):
 
 
 def handle_prompt_abort(prompt_for):
-    import fabric.state
-    reason = "Needed to prompt for %s, but %%s" % prompt_for
+    from fabric.state import env
+    reason = "[%s] needed to prompt for %s, but %%s" % (env.host_string, prompt_for)
     # Explicit "don't prompt me bro"
-    if fabric.state.env.abort_on_prompts:
-        abort(reason % "abort-on-prompts was set to True")
+    if not env.abort_on_prompts and not env.parallel:
+        func = warn
+    else:
+        func = abort
+
+    func(reason % "abort-on-prompts was set")
+
     # Implicit "parallel == stdin/prompts have ambiguous target"
-    if fabric.state.env.parallel:
+    if env.parallel:
         abort(reason % "input would be ambiguous in parallel mode")
 
 

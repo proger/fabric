@@ -842,13 +842,11 @@ def _run_command(command, shell=True, pty=True, combine_stderr=True,
         out.real_command = wrapped_command
         if status != 0:
             out.failed = True
-            msg = "%s() received nonzero return code %s while executing" % (
-                which, status
+            msg = "[%s]: %s: '%s' received nonzero return code %s" % (
+                env.host_string, which, given_command, status
             )
-            if env.warn_only:
-                msg += " '%s'!" % given_command
-            else:
-                msg += "!\n\nRequested: %s\nExecuted: %s" % (
+            if not env.warn_only:
+                msg += "\n\nRequested: %s\nExecuted: %s" % (
                     given_command, wrapped_command
                 )
             error(message=msg, stdout=out, stderr=err)

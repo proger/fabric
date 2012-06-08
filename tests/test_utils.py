@@ -62,14 +62,14 @@ def test_abort():
 @with_patched_object(output, 'aborts', True)
 def test_abort_message():
     """
-    abort() should print 'Fatal error' plus exception value
+    abort() should print 'Fatal' plus exception value
     """
     try:
         abort("Test")
     except SystemExit:
         pass
     result = sys.stderr.getvalue()
-    eq_("\nFatal error: Test\n\nAborting.\n", result)
+    eq_("Fatal: Test\n\nAborting.\n", result)
 
 
 @mock_streams('stdout')
